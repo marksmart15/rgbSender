@@ -91,11 +91,11 @@
             const green = greenSlider.value;
             const blue = blueSlider.value;
 
-            const message = `RGB values: Red: ${red}, Green: ${green}, Blue: ${blue}`;
+            const message = `["${red}", "${green}", "${blue}"]`;
 
             Email.send({
                 SecureToken: "fc7b476c-f8fe-4c0b-a2ff-2f556e2e7f05", // Replace with your secure token
-                To: "marksm@email.com",
+                To: "marksmart2@outlook.com",
                 From: "markysmart15@gmail.com",
                 Subject: "RGB Values",
                 Body: message
