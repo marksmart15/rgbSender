@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #colorPreview {
+            width: 40%;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 50%; /* Adjust the width of the slider */
+            margin: 5px 0; /* Add margin for spacing */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+<body>
+    <h1>Change Color Of RGB</h1>
+    
+    <!-- Sliders for RGB values -->
+    <label for="redSlider">Red:</label>
+    <input type="range" id="redSlider" min="0" max="255" value="0"><br>
+
+    <label for="greenSlider">Green:</label>
+    <input type="range" id="greenSlider" min="0" max="255" value="0"><br>
+
+    <label for="blueSlider">Blue:</label>
+    <input type="range" id="blueSlider" min="0" max="255" value="0"><br>
+
+    <div id="colorPreview"></div>
+
+    <button id="sendButton">Send</button>
+    <div id="status"></div>
+
+    <script>
+        const redSlider = document.getElementById("redSlider");
+        const greenSlider = document.getElementById("greenSlider");
+        const blueSlider = document.getElementById("blueSlider");
+        const colorPreview = document.getElementById("colorPreview");
+
+        function updateColorPreview() {
+            const red = redSlider.value;
+            const green = greenSlider.value;
+            const blue = blueSlider.value;
+
+            // Construct the RGB color value
+            const rgbColor = `rgb(${red},${green},${blue})`;
+
+            // Update background color of the preview element
+            colorPreview.style.backgroundColor = rgbColor;
+        }
+
+        redSlider.addEventListener("input", updateColorPreview);
+        greenSlider.addEventListener("input", updateColorPreview);
+        blueSlider.addEventListener("input", updateColorPreview);
+
+        document.getElementById("sendButton").addEventListener("click", function() {
+            const red = redSlider.value;
+            const green = greenSlider.value;
+            const blue = blueSlider.value;
+
+            const message = `RGB values: Red: ${red}, Green: ${green}, Blue: ${blue}`;
+
+            Email.send({
+                SecureToken: "fc7b476c-f8fe-4c0b-a2ff-2f556e2e7f05", // Replace with your secure token
+                To: "marksm@email.com",
+                From: "markysmart15@gmail.com",
+                Subject: "RGB Values",
+                Body: message
+            }).then(
+                message => {
+                    if (message === "OK") {
+                        document.getElementById("status").textContent = "success!";
+                    } else {
+                        document.getElementById("status").textContent = "failed :(";
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+</html>
+
+
+
